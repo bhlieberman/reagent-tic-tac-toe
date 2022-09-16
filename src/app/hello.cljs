@@ -21,25 +21,24 @@
                   (swap! state assoc i (if @x-is-next \X \O))
                   (swap! x-is-next not)
                   (swap! winner #(calculate-winner @state)))
-        render-square (fn [i] [:button
-                               {:class-name "square"
-                                :on-click (fn [_evt] (handler i) 
+        render-square (fn [i] [:button.square
+                               {:on-click (fn [_evt] (handler i) 
                                             #(.removeEventListener js/document "click" handler))}
                                (nth @state i)])]
     (fn [] [:div
-            [:div {:class-name "status"}
+            [:div.status
              (if (some? @winner)
                (str "Winner is: " @winner)
                (str "Next player is:" (if @x-is-next \X \O)))]
             (for [idx (partition 3 (range 0 9))]
-              (into [:div {:class-name "board-row"}]
+              (into [:div.board-row]
                     (map (fn [i] [render-square i]) idx)))])))
 
 (defn game []
-  [:div {:class-name "game"}
-   [:div {:class-name "game-board"}
+  [:div.game
+   [:div.game-board
     [board]]
-   [:div {:class-name "game-info"}
+   [:div.game-info
     [:div]
     [:ol]]])
 
